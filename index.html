@@ -128,7 +128,7 @@ section.anuncio{background:linear-gradient(135deg,var(--morado),#5b2a86);border:
 const ADMIN = new URLSearchParams(location.search).has('editar');
 // shortcut: las fotos subidas se guardan reducidas dentro de localStorage (~5 MB en total);
 // moverlas a almacenamiento de archivos cuando exista el backend.
-const KEY = 'cocoMenu.v5';
+const KEY = 'cocoMenu.v6';
 const frappe = (n, a = 90, b = 100) => ({ name: n, p1: a, p2: b });
 // Iconos propios (trazo 24x24); la categoría guarda solo la clave.
 const ICONS = {
@@ -150,6 +150,12 @@ const DEFAULT = [
   { icon: 'taza', name: 'Capuccino', note: '', items:
     ['Vainilla', 'Caramelo', 'Chocolate Blanco', 'Mocha', 'Expresso', 'Chai', 'Chocolate Oaxaqueño']
       .map(n => frappe(n, 60, 70)) },
+  { icon: 'taza', name: 'Café Artesanal', note: '', items:
+    ['De la Casa', 'Vainilla', 'Chocolate'].map(n => frappe(n, 50, 60)) },
+  { icon: 'te', name: 'Té', note: '', items: [
+    ...['Fresas del Bosque', 'Fresa Vainilla', 'Frambuesa'].map(n => frappe(n, 50, 60)),
+    // sin precio en el menú de Instagram
+    ...['Chai Caramelo', 'Mango Fresa', 'Limón Granada'].map(n => frappe(n, '', '')) ] },
   { icon: 'boba', name: 'Boba', note: 'Viernes a domingo', img: 'fotos/boba.png', items: [] },
   { icon: 'postre', name: 'Postres', note: '', items: [
     { name: 'Suspiritos', p1: '', p2: '' }, { name: 'Tiramisú', p1: '', p2: '' } ] },
@@ -160,7 +166,7 @@ const DEFAULT = [
   'frappe-nutella', 'frappe-macha', 'frappe-taro', 'limonada-fresa', 'limonada-limon', 'frappe-dragon-fruit',
   'frappe-frutos-rojos', 'frappe-biscoff', 'americano'],
  ['capuccino-vainilla', 'capuccino-caramelo', 'capuccino-chocolate-blanco', 'capuccino-mocha', 'expresso', 'chai', 'chocolate-oaxaqueno'],
- [], ['suspiritos', 'tiramisu']].forEach((fs, c) => fs.forEach((f, i) => DEFAULT[c].items[i].img = `fotos/${f}.jpg`));
+ [], [], [], ['suspiritos', 'tiramisu']].forEach((fs, c) => fs.forEach((f, i) => DEFAULT[c].items[i].img = `fotos/${f}.jpg`));
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => `&#${c.charCodeAt(0)};`);

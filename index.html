@@ -128,7 +128,7 @@ section.anuncio{background:linear-gradient(135deg,var(--morado),#5b2a86);border:
 const ADMIN = new URLSearchParams(location.search).has('editar');
 // shortcut: las fotos subidas se guardan reducidas dentro de localStorage (~5 MB en total);
 // moverlas a almacenamiento de archivos cuando exista el backend.
-const KEY = 'cocoMenu.v6';
+const KEY = 'cocoMenu.v7';
 const frappe = (n, a = 90, b = 100) => ({ name: n, p1: a, p2: b });
 // Iconos propios (trazo 24x24); la categoría guarda solo la clave.
 const ICONS = {
@@ -166,7 +166,9 @@ const DEFAULT = [
   'frappe-nutella', 'frappe-macha', 'frappe-taro', 'limonada-fresa', 'limonada-limon', 'frappe-dragon-fruit',
   'frappe-frutos-rojos', 'frappe-biscoff', 'americano'],
  ['capuccino-vainilla', 'capuccino-caramelo', 'capuccino-chocolate-blanco', 'capuccino-mocha', 'expresso', 'chai', 'chocolate-oaxaqueno'],
- [], [], [], ['suspiritos', 'tiramisu']].forEach((fs, c) => fs.forEach((f, i) => DEFAULT[c].items[i].img = `fotos/${f}.jpg`));
+ ['cafe-casa', 'cafe-vainilla', 'cafe-chocolate'],
+ ['te-fresas-bosque', 'te-fresa-vainilla', 'te-frambuesa', 'te-chai-caramelo', 'te-mango-fresa', 'te-limon-granada'],
+ [], ['suspiritos', 'tiramisu']].forEach((fs, c) => fs.forEach((f, i) => DEFAULT[c].items[i].img = `fotos/${f}.jpg`));
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => `&#${c.charCodeAt(0)};`);

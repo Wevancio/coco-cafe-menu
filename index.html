@@ -76,6 +76,7 @@ dialog p{margin:10px 4px;font-weight:700}
 
 /* Categoría sin productos = anuncio (Boba) */
 section.anuncio{background:linear-gradient(135deg,var(--morado),#5b2a86);border:0;color:#fff;text-align:center;padding:28px 18px}
+.anuncio .banner{margin:0 0 10px;padding:0;background:radial-gradient(circle 100px at 50% 54%,#ffffff33 98%,transparent)}
 .anuncio .ico{font-size:56px;line-height:1}
 .anuncio h2{font:700 56px/1 Caveat,cursive;color:#fff;text-transform:none}
 .anuncio .nota{display:inline-block;margin-top:8px;background:#fff;color:var(--morado);font-size:14px}
@@ -127,7 +128,7 @@ section.anuncio{background:linear-gradient(135deg,var(--morado),#5b2a86);border:
 const ADMIN = new URLSearchParams(location.search).has('editar');
 // shortcut: las fotos subidas se guardan reducidas dentro de localStorage (~5 MB en total);
 // moverlas a almacenamiento de archivos cuando exista el backend.
-const KEY = 'cocoMenu.v4';
+const KEY = 'cocoMenu.v5';
 const frappe = (n, a = 90, b = 100) => ({ name: n, p1: a, p2: b });
 // Iconos propios (trazo 24x24); la categoría guarda solo la clave.
 const ICONS = {
@@ -149,7 +150,7 @@ const DEFAULT = [
   { icon: 'taza', name: 'Capuccino', note: '', items:
     ['Vainilla', 'Caramelo', 'Chocolate Blanco', 'Mocha', 'Expresso', 'Chai', 'Chocolate Oaxaqueño']
       .map(n => frappe(n, 60, 70)) },
-  { icon: 'boba', name: 'Boba', note: 'Viernes a domingo', items: [] },
+  { icon: 'boba', name: 'Boba', note: 'Viernes a domingo', img: 'fotos/boba.png', items: [] },
   { icon: 'postre', name: 'Postres', note: '', items: [
     { name: 'Suspiritos', p1: '', p2: '' }, { name: 'Tiramisú', p1: '', p2: '' } ] },
 ];
@@ -169,9 +170,7 @@ console.assert(money(80) === '$80' && money('') === '' && money('90.5') === '$90
 
 let menu, editing = false, q = '';
 try { menu = JSON.parse(localStorage.getItem(KEY)); } catch {}
-if (!Array.isArray(menu)) menu = structuredClone(DEFAULT);
-menu.forEach(c => { if (c.img === 'fotos/frappes.jpg') c.img = 'fotos/frappes.png'; });   // menús guardados antes del recorte sin fondo
-const save = () => {
+if (!Array.isArray(menu)) menu = structuredClone(DEFAULT);const save = () => {
   try { localStorage.setItem(KEY, JSON.stringify(menu)); }
   catch (e) { if (e.name === 'QuotaExceededError') alert('No hay espacio para guardar más fotos en este navegador. Quita alguna foto.'); }
 };
@@ -208,7 +207,7 @@ function render() {
 function viewCat(c, i) {
   const items = c.items.filter(it => plano(it.name).includes(plano(q)));
   if (q && !items.length) return '';
-  if (!c.items.length) return `<section class="anuncio" id="c${i}"><div class="ico">${ico(c.icon)}</div>
+  if (!c.items.length) return `<section class="anuncio" id="c${i}">${c.img ? `<img class="banner" src="${esc(c.img)}" alt="Foto de ${esc(c.name)}">` : `<div class="ico">${ico(c.icon)}</div>`}
     <h2>${esc(c.name)}</h2>${c.note ? `<span class="nota">${esc(c.note)}</span>` : ''}</section>`;
   const dos = c.items.some(it => money(it.p2));
   return `<section id="c${i}"><div class="cab"><span class="ico">${ico(c.icon)}</span><h2>${esc(c.name)}</h2>
